@@ -1,8 +1,5 @@
-import React, { useRef, useCallback } from "react";
-
-const MAX_VIDEO_PLAYERS = 50; // Limit the number of video players
-const VIDEO_URL =
-	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/test.mp4";
+import { useRef, useCallback } from "react";
+import { MAX_VIDEO_PLAYERS, VIDEO_URL } from "@/app/constants";
 
 export const useVideoPool = () => {
 	const videoPool = useRef<Map<string, HTMLVideoElement>>(new Map());

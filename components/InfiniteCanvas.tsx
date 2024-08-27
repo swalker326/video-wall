@@ -4,10 +4,6 @@ import { useGridPositions } from "@/app/hooks/useGridPositions";
 import { useVideoPool } from "@/app/hooks/useVideoPool";
 import React, { useRef, useState } from "react";
 
-export const VIDEO_SIZE = 100; // Video dimensions (width and height)
-export const MARGIN = 0; // Margin between videos
-export const GRID_SPAN = 5;
-
 const InfiniteCanvas: React.FC = () => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const {

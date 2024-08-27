@@ -1,5 +1,5 @@
-import { VIDEO_SIZE, MARGIN, GRID_SPAN } from "@/components/InfiniteCanvas";
-import React, { useState, useCallback } from "react";
+import { VIDEO_SIZE, MARGIN, GRID_SPAN } from "@/app/constants";
+import { useCallback } from "react";
 
 export const useGridPositions = (offsetX: number, offsetY: number) => {
 	return useCallback(() => {

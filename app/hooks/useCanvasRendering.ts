@@ -1,4 +1,4 @@
-import { VIDEO_SIZE } from "@/components/InfiniteCanvas";
+import { VIDEO_SIZE } from "@/app/constants";
 import React, { useEffect, useRef } from "react";
 
 export const useCanvasRendering = (
