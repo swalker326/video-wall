@@ -1,5 +1,6 @@
+"use client";
 import CanvasStore from "../../modules/state/CanvasStore";
-import { PointerEvent, useEffect, useRef, WheelEvent } from "react";
+import { PointerEvent, useEffect, useMemo, useRef, WheelEvent } from "react";
 import useSize from "@react-hook/size";
 import InfiniteCanvas from "./InfiniteCanvas";
 import useRenderLoop from "../../modules/core/RenderLoop";
@@ -20,14 +21,21 @@ const pointerListener = (event: PointerEvent) => {
 	CanvasStore.movePointer(event.clientX, event.clientY);
 };
 
-const CanvasRoot = () => {
+export type Coordinate = [number, number];
+
+const CanvasRoot = ({
+	startingCoordinate,
+}: { startingCoordinate: Coordinate }) => {
 	const canvas = useRef<HTMLDivElement>(null);
 	const [width, height] = useSize(canvas);
+
 	useEffect(() => {
 		if (width === 0 || height === 0) return;
 		CanvasStore.initialize(width, height);
 	}, [width, height]);
+
 	const frame = useRenderLoop(60);
+
 	return (
 		<div className="w-full h-full">
 			<div
@@ -36,7 +44,7 @@ const CanvasRoot = () => {
 				onWheel={wheelListener}
 				onPointerMove={pointerListener}
 			>
-				<InfiniteCanvas frame={frame} />
+				<InfiniteCanvas frame={frame} startingCoordinate={startingCoordinate} />
 			</div>
 		</div>
 	);

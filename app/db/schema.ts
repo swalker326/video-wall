@@ -1,7 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { nanoid } from "nanoid";
-import { db } from ".";
 
 export const userTable = sqliteTable("users", {
 	id: text("id")
@@ -20,8 +19,7 @@ export const coordinateTable = sqliteTable("coordinates", {
 		.$defaultFn(() => nanoid())
 		.primaryKey(),
 	userId: text("userId").notNull(),
-	x: integer("x").notNull(),
-	y: integer("y").notNull(),
+	coordinates: text("coordinates", { mode: "json" }).notNull(),
 	src: text("src").notNull(),
 });
 

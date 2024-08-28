@@ -1,4 +1,3 @@
-"use client";
 import CanvasStore from "../../modules/state/CanvasStore";
 import { useEffect, useRef, useState } from "react";
 

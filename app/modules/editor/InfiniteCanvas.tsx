@@ -1,48 +1,51 @@
-import { RECT_H, RECT_W, VIDEO_URLS } from "@/app/constants";
+"use client";
+import { RECT_H, RECT_W } from "@/app/constants";
 import { CanvasPosition, Position } from "../../modules/core/foundation";
 import CanvasStore from "../../modules/state/CanvasStore";
 import { memo } from "react";
-import { cn } from "@/lib/utils";
+import { gatherCoordinates } from "./coordinateUtils";
+import { Coordinate } from "./CanvasRoot";
 
-interface TextBlockProps extends CanvasPosition {
+interface VideoBlockProps extends CanvasPosition {
 	text: string;
-	color: string;
 	width: number;
 	height: number;
 }
 
-const TextBlock = ({
-	text,
-	color,
-	left,
-	top,
-	width,
-	height,
-}: TextBlockProps) => {
+const VideoBlock = ({ text, left, top, width, height }: VideoBlockProps) => {
 	return (
 		<Position left={left} top={top} width={width} height={height}>
 			<div
-				className="flex items-center justify-center"
+				className="flex items-center justify-center object-cover"
 				style={{
 					width: `${width}px`,
 					height: `${height}px`,
-					background: color,
+					// background: color,
 				}}
 			>
-				{text}
+				<video
+					className="w-full h-full object-cover"
+					muted
+					loop
+					autoPlay
+					src={text}
+				/>
 			</div>
 		</Position>
 	);
 };
 
-const InfiniteCanvas = ({ frame }: { frame: string }) => {
+const InfiniteCanvas = ({
+	frame,
+	startingCoordinate,
+}: { frame: string; startingCoordinate: Coordinate }) => {
 	const rectW = RECT_W;
 	const rectH = RECT_H;
 	const scale = CanvasStore.scale;
 
 	return (
 		<div
-			className="w-full h-full relative"
+			className="w-full h-full"
 			style={{
 				transform: `scale(${
 					// biome-ignore lint/style/noCommaOperator: <explanation>
@@ -51,29 +54,18 @@ const InfiniteCanvas = ({ frame }: { frame: string }) => {
 				transformOrigin: "top left",
 			}}
 		>
-			{VIDEO_URLS.map((text, index) => {
-				console.log("LEFT", (index % 3) * rectW);
+			{/* {videos.map(({ src, id }, index) => {
 				return (
-					<video
-						// className={cn(
-						// 	`left-[${(index % 3) * rectW}px] top-[${
-						// 		Math.floor(index / 3) * rectH
-						// 	}px] w-[${rectW}px] h-[${rectH}px] absolute`,
-						// )}
-						style={{
-							left: `${(index % 3) * rectW}px`,
-							top: `${Math.floor(index / 3) * rectH}px`,
-							width: `${rectW}px`,
-							height: `${rectH}px`,
-						}}
-						muted
-						loop
-						autoPlay
-						key={`${text}-${index}`}
-						src={text}
+					<VideoBlock
+						key={id}
+						text={src}
+						left={(index % 3) * rectW}
+						top={Math.floor(index / 3) * rectH}
+						width={rectW}
+						height={rectH}
 					/>
 				);
-			})}
+			})} */}
 		</div>
 	);
 };

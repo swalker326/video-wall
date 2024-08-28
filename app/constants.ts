@@ -10,6 +10,14 @@ export const VIDEO_URLS = [
 	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/file_example_MP4_640_3MG.mp4",
 	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/space_man.mp4",
 	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/light-tunnel.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/test.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/file_example_MP4_640_3MG.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/space_man.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/light-tunnel.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/test.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/file_example_MP4_640_3MG.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/space_man.mp4",
+	"https://pub-7f62fc5682c046d88ab08dadf16e1018.r2.dev/light-tunnel.mp4",
 ];
 export const VIDEO_SIZE = 50; // Video dimensions (width and height)
 export const MARGIN = 0; // Margin between videos

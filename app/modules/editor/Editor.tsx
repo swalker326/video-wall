@@ -1,11 +1,12 @@
-import CanvasRoot from "./CanvasRoot";
+"use client";
+import CanvasRoot, { type Coordinate } from "./CanvasRoot";
 
-const Editor = () => {
-  return (
-    <div className="w-full h-full">
-      <CanvasRoot />
-    </div>
-  );
+const Editor = ({ startingCoordinate }: { startingCoordinate: Coordinate }) => {
+	return (
+		<div className="w-full h-full">
+			<CanvasRoot startingCoordinate={startingCoordinate} />
+		</div>
+	);
 };
 
 export default Editor;

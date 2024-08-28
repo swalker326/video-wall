@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
 
-config({ path: ".env" });
+config({ path: ".env.local" });
 
 const dbUrl = process.env.TURSO_CONNECTION_URL;
 const authToken = process.env.TURSO_AUTH_TOKEN;
@@ -11,7 +11,7 @@ if (!dbUrl || !authToken) {
 }
 
 export default defineConfig({
-	schema: "./src/db/schema.ts",
+	schema: "./app/db/schema.ts",
 	out: "./migrations",
 	dialect: "sqlite",
 	driver: "turso",
