@@ -5,6 +5,7 @@ import CanvasStore from "../../modules/state/CanvasStore";
 import { memo } from "react";
 import { gatherCoordinates } from "./coordinateUtils";
 import { Coordinate } from "./CanvasRoot";
+import { VIDEO_URLS } from "@/app/constants";
 
 interface VideoBlockProps extends CanvasPosition {
 	text: string;
@@ -42,6 +43,9 @@ const InfiniteCanvas = ({
 	const rectW = RECT_W;
 	const rectH = RECT_H;
 	const scale = CanvasStore.scale;
+	const videos = VIDEO_URLS.map((src, index) => {
+		return { src, id: index };
+	});
 
 	return (
 		<div
@@ -54,7 +58,7 @@ const InfiniteCanvas = ({
 				transformOrigin: "top left",
 			}}
 		>
-			{/* {videos.map(({ src, id }, index) => {
+			{videos.map(({ src, id }, index) => {
 				return (
 					<VideoBlock
 						key={id}
@@ -65,7 +69,7 @@ const InfiniteCanvas = ({
 						height={rectH}
 					/>
 				);
-			})} */}
+			})}
 		</div>
 	);
 };
