@@ -1,3 +1,4 @@
+import { CloudflareStorageProvider } from "./CloudflareProvider";
 import type { IStorageProvider } from "./IStorageProvider";
 import { S3StorageProvider } from "./S3StorageProvider";
 
@@ -12,8 +13,8 @@ export class StorageFactory {
 			// 	return new GCPStorageProvider(bucketName);
 			case "aws":
 				return new S3StorageProvider(bucketName);
-			// case "cloudflare":
-			// 	return new CloudflareStorageProvider(bucketName);
+			case "cloudflare":
+				return new CloudflareStorageProvider(bucketName);
 			default:
 				throw new Error("Unsupported storage provider");
 		}

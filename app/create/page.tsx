@@ -1,17 +1,16 @@
 export default function CreateRoute() {
-	async function createCoordinate(formData: FormData) {
+	const formAction = async (formData: FormData) => {
 		"use server";
-		const rawFormData = {
-			video: formData.get("video"),
-		};
-		console.log("::RAW FORM DATA", rawFormData);
-
-		// mutate data
-		// revalidate cache
-	}
+		const response = await fetch("http://localhost:3000/api/upload", {
+			method: "POST",
+			body: formData,
+		});
+		const data = await response.json();
+		console.log(data);
+	};
 	return (
 		<div className="w-full h-full">
-			<form action={createCoordinate} className="w-full h-full">
+			<form action={formAction} className="w-full h-full" method="POST">
 				<input type="file" name="video" />
 				<button type="submit">Submit</button>
 			</form>

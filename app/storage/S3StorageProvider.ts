@@ -1,4 +1,5 @@
 import { Readable } from "node:stream";
+import { Upload } from "@aws-sdk/lib-storage";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import {
 	GetObjectCommand,
@@ -17,12 +18,20 @@ export class S3StorageProvider implements IStorageProvider {
 		const region = process.env.AWS_REGION;
 		const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 		const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+		const awsEndpoint = process.env.AWS_ENDPOINT;
 
-		if (!region || !bucketName || !accessKeyId || !secretAccessKey) {
+		if (
+			!region ||
+			!bucketName ||
+			!accessKeyId ||
+			!secretAccessKey ||
+			!awsEndpoint
+		) {
 			throw new Error("Missing AWS environment variables");
 		}
 		this.s3 = new S3Client({
 			region: region,
+			endpoint: awsEndpoint,
 			credentials: {
 				accessKeyId: accessKeyId,
 				secretAccessKey: secretAccessKey,
@@ -34,7 +43,9 @@ export class S3StorageProvider implements IStorageProvider {
 			Bucket: this.bucketName,
 			Key: name,
 		});
-		const signedUrl = await getSignedUrl(this.s3, command, { expiresIn: 3600 });
+		const signedUrl = await getSignedUrl(this.s3, command, {
+			expiresIn: 3600,
+		});
 		return signedUrl;
 	}
 
@@ -43,18 +54,27 @@ export class S3StorageProvider implements IStorageProvider {
 		destination,
 		name,
 	}: {
-		data: AsyncIterable<Uint8Array>;
+		data: ReadableStream;
 		destination: string;
 		name: string;
 	}): Promise<string> {
-		const readableStream = Readable.from(data);
-		const command = new PutObjectCommand({
+		const command = {
 			Bucket: this.bucketName,
-			Key: `${destination}/${name}`,
-			Body: readableStream,
-		});
-		const result = await this.s3.send(command);
-		console.log("Upload complete", result.$metadata);
-		return name;
+			Key: name,
+			Body: data,
+			ContentType: "video/mp4",
+		};
+		try {
+			console.log("uploading file to s3");
+			await new Upload({
+				client: this.s3,
+				leavePartsOnError: false,
+				params: command,
+			}).done();
+			return name;
+		} catch (error) {
+			console.error("Error uploading file", error);
+			throw error;
+		}
 	}
 }
