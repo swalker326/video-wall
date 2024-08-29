@@ -1,7 +1,7 @@
 export default function CreateRoute() {
 	const formAction = async (formData: FormData) => {
 		"use server";
-		const response = await fetch("http://localhost:3000/api/upload", {
+		const response = await fetch(`${process.env.NEXT_HOST}/api/upload`, {
 			method: "POST",
 			body: formData,
 		});
